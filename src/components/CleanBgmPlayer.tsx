@@ -297,15 +297,19 @@ export const CleanBgmPlayer: React.FC<CleanBgmPlayerProps> = ({
   }, []);
 
   // 🛑 [요청 2] 타이머가 완료되면 음악 자동 멈춤 (cleanTimerSeconds <= 0)
+  //    타이머가 흘러가다가 0이 되는 '그 순간'에만 멈춰요.
+  //    (예전엔 타이머가 0인 상태 — 시작 전 · 끝난 뒤 — 에서 ▶를 누르면 바로 다시 멈춰서 음악이 안 나왔어요)
+  const prevCleanSecRef = useRef<number | undefined>(cleanTimerSeconds);
   useEffect(() => {
-    if (cleanTimerSeconds !== undefined && cleanTimerSeconds <= 0) {
-      if (isPlaying) {
-        console.log('🔔 [CleanBgmPlayer] 청소 타이머 종료로 음악 자동 멈춤');
-        sendPlayerCommand('pauseVideo');
-        setIsPlaying(false);
-      }
+    const prev = prevCleanSecRef.current;
+    prevCleanSecRef.current = cleanTimerSeconds;
+    if (cleanTimerSeconds === undefined || prev === undefined) return;
+    if (prev > 0 && cleanTimerSeconds <= 0) {
+      console.log('🔔 [CleanBgmPlayer] 청소 타이머 종료로 음악 자동 멈춤');
+      sendPlayerCommand('pauseVideo');
+      setIsPlaying(false);
     }
-  }, [cleanTimerSeconds, isPlaying]);
+  }, [cleanTimerSeconds]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // 📡 유튜브 IFrame API postMessage 이벤트 리스너 (재생 시간 및 상태 수신)
   useEffect(() => {

@@ -1,6 +1,6 @@
 {
   "name": "class-in",
-  "version": "1.1.56",
+  "version": "1.1.57",
   "description": "Class in - 스마트 학급 대시보드",
   "author": "Smart Classroom OS",
   "main": "electron/main.js",

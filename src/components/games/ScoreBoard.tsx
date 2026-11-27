@@ -203,11 +203,10 @@ export const ScoreBoard: React.FC<{ teams: Team[]; isLight: boolean; onToBracket
 
   return (
     <div className={`sb ${isLight ? 'is-light' : 'is-dark'}`} data-scoreboard>
-      {/* ⏱ 경기 타이머 (맨 위) */}
-      <div className="sb-timer-row">
-        <GameTimer storeKey="class_game_timer_scoreboard" isLight={isLight} />
-      </div>
+      {/* 머리: 왼쪽 = 제목 · 대결 방식 · 도구 / 오른쪽 = ⏱ 경기 타이머 (시간 | 조절 단추 + 시작) */}
+      <div className="sb-head">
       <div className="sb-top">
+        <div className="sb-top-row">
         <div className="gb-title">🔢 점수판</div>
         <div className="gb-seg">
           {presets.map(([v, l]) => (
@@ -215,6 +214,7 @@ export const ScoreBoard: React.FC<{ teams: Team[]; isLight: boolean; onToBracket
               {l}
             </button>
           ))}
+        </div>
         </div>
         <div className="sb-tools">
           <label className="sb-base">
@@ -257,6 +257,10 @@ export const ScoreBoard: React.FC<{ teams: Team[]; isLight: boolean; onToBracket
             🏁 경기 끝 · 순위 발표
           </button>
         </div>
+      </div>
+      <div className="sb-timer-row">
+        <GameTimer storeKey="class_game_timer_scoreboard" isLight={isLight} />
+      </div>
       </div>
 
       <div className={`sb-grid n${Math.min(st.teams.length, 8)}`}>

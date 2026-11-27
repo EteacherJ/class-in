@@ -6264,3 +6264,35 @@ html.dashboard-collapsed [data-lock-screen] { display: none; }
 /* 잠금 화면: 왼쪽 아래 표시 · 오른쪽 아래 화면 접기 */
 .lg-lock-owner { position: absolute; left: 20px; bottom: 18px; z-index: 30; }
 .lg-lock-collapse.is-corner { position: absolute; right: 20px; bottom: 18px; z-index: 30; }
+
+/* 🔢 점수판 정리 (v1.1.57) — 화면 높이에 맞춰 꽉 채우고, 카드가 잘리거나 겹치지 않게 */
+.sb { height: auto; flex: 1 1 0; min-height: 0; max-height: 100%; gap: 10px; }
+.sb-head { flex: none; display: flex; align-items: stretch; gap: 12px; }
+.sb-head .sb-top { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
+.sb-top-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.sb-head .sb-tools { margin-left: 0; gap: 6px; }
+.sb-head .sb-tools .gb-btn, .sb-head .sb-finish { padding: 6px 12px; font-size: 13px; border-radius: 12px; }
+.sb-head .sb-finish { box-shadow: 0 4px 12px rgba(239,68,68,.3); }
+.sb-timer-row { flex: none; margin: 0; display: flex; justify-content: flex-end; }
+
+/* ⏱ 점수판 타이머: [ 03:00 │ 1분 2분 3분 5분 · −30초 +30초 / ▶ 시작 🔄 ] */
+.sb .gtm:not(.is-compact) { flex-direction: row; flex-wrap: nowrap; align-items: stretch; gap: 0; padding: 8px 10px 8px 18px; border-radius: 20px; }
+.sb .gtm:not(.is-compact) .gtm-time { font-size: 64px; line-height: 1; align-self: center; padding: 0 16px 10px 0; }
+.sb .gtm:not(.is-compact) .gtm-time::before { display: none; }
+.sb .gtm:not(.is-compact) .gtm-ctl { display: grid; grid-template-columns: auto auto; align-content: center; gap: 5px; padding-left: 14px; border-left: 2px solid #e0e7ff; max-width: none; }
+.sb .gtm.is-dark:not(.is-compact) .gtm-ctl { border-left-color: rgba(129,140,248,.35); }
+.sb .gtm:not(.is-compact) .gtm-presets { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, auto) ; gap: 3px; }
+.sb .gtm:not(.is-compact) .gtm-presets button { padding: 4px 6px; font-size: 11px; }
+.sb .gtm:not(.is-compact) .gtm-presets button[title] { grid-column: span 2; }
+.sb .gtm:not(.is-compact) .gtm-go { grid-column: 1; padding: 7px 10px; font-size: 13px; }
+.sb .gtm:not(.is-compact) .gtm-reset { grid-column: 2; padding: 4px 8px; }
+
+/* 점수 카드: 카드 크기에 맞춰 숫자 · 단추 크기가 같이 바뀌어요 (잘림 없음) */
+.sb-grid { grid-auto-rows: minmax(0, 1fr); }
+.sb-card { container-type: size; overflow: hidden; padding: clamp(6px, 2cqh, 12px) 12px; gap: 2px; justify-content: space-between; }
+.sb-card-top { flex: none; }
+.sb-card-top > :first-child { width: clamp(28px, 16cqh, 58px) !important; height: clamp(28px, 16cqh, 58px) !important; }
+.sb-name { font-size: clamp(15px, min(11cqh, 8cqw), 30px); }
+.sb-score, .sb-card.is-big .sb-score { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; font-size: clamp(32px, min(46cqh, 34cqw), 220px); line-height: .95; }
+.sb-btns { flex: none; }
+.sb-btns button { font-size: clamp(15px, min(10cqh, 6cqw), 32px); padding: clamp(4px, 2.6cqh, 12px) 0; border-radius: clamp(10px, 3cqh, 16px); }
