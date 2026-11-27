@@ -1,0 +1,19 @@
+{
+  "name": "스마트 학급 대시보드 (Smart Classroom OS)",
+  "short_name": "ClassroomOS",
+  "description": "초등학교 스마트 전자칠판 및 학급 경영을 위한 올인원 대시보드 OS",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "orientation": "any",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

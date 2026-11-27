@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <title>Class in (스마트 학급 대시보드)</title>
+    <meta name="description" content="스마트 전자칠판 및 학급 운영을 위한 올인원 대시보드 (타이머, 좌석 배치, 발표자 추첨, 시간표, 판서 메모, 칭찬 랭킹)" />
+    <meta property="og:title" content="Class in 스마트 학급 대시보드" />
+    <meta property="og:description" content="스마트 전자칠판 및 학급 운영을 위한 올인원 대시보드 (타이머, 좌석 배치, 발표자 추첨, 시간표, 판서 메모, 칭찬 랭킹)" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" type="image/png" href="./icon.png" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <script>
+      // file:// 프로토콜(오프라인 파일 열기)에서는 Service Worker 등록 에러 방지
+      if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+    </script>
+    <!-- Modern Korean Pretendard & 15 Free Korean Fonts CDN -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gaegu:wght@400;700&family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Jua&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@400;500;700;900&family=Dongle:wght@400;700&family=Poor+Story&family=Yeon+Sung&family=Song+Myung&family=Single+Day&display=swap" rel="stylesheet">
+    <!-- Gmarket Sans, 메이플스토리체, 경기천년, 카페24 웹폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff" />
+    <style>
+      @font-face {
+        font-family: 'GmarketSans';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'MaplestoryOTFBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Cafe24Ssurround';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+      /* 🏫 학교안심 폰트 2종 (PDF 2페이지 수정사항 반영) */
+      @font-face {
+        font-family: 'HakgyoansimDunggeunmiso';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2408@1.0/HakgyoansimDunggeunmisoTTF-B.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'HakgyoansimGeurimilgi';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+      }
+      /* 🏛️ 경기천년 폰트 2종 (바탕, 제목) */
+      @font-face {
+        font-family: 'GyeonggiBatang';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'GyeonggiTitle';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleV.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+    <!-- 📺 YouTube Iframe Player API for seamless bidirectional media control -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- 🔤 초기 렌더링 시 깜빡임(FOUT) 방지: 저장된 폰트 즉각 주입 -->
+    <script>
+      (function() {
+        try {
+          var fontMap = {
+            'pretendard': "Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif",
+            'noto-sans-kr': "'Noto Sans KR', sans-serif",
+            'nanum-gothic': "'Nanum Gothic', sans-serif",
+            'nanum-myeongjo': "'Nanum Myeongjo', serif",
+            'gowun-dodum': "'Gowun Dodum', sans-serif",
+            'gowun-batang': "'Gowun Batang', serif",
+            'gaegu': "'Gaegu', cursive",
+            'jua': "'Jua', sans-serif",
+            'do-hyeon': "'Do Hyeon', sans-serif",
+            'black-han-sans': "'Black Han Sans', sans-serif",
+            'gmarket-sans': "'GmarketSans', sans-serif",
+            'maplestory': "'MaplestoryOTFBold', cursive",
+            'cafe24-surround': "'Cafe24Ssurround', sans-serif",
+            'dongle': "'Dongle', sans-serif",
+            'yeon-sung': "'Yeon Sung', cursive",
+            'hakgyoansim-dunggeun': "'HakgyoansimDunggeunmiso', sans-serif",
+            'hakgyoansim-geurimilgi': "'HakgyoansimGeurimilgi', cursive",
+            'gyeonggi-batang': "'GyeonggiBatang', serif",
+            'gyeonggi-title': "'GyeonggiTitle', sans-serif"
+          };
+          var raw = localStorage.getItem('class_dashboard_config');
+          if (raw) {
+            var cfg = JSON.parse(raw);
+            if (cfg && cfg.fontFamily && fontMap[cfg.fontFamily]) {
+              var f = fontMap[cfg.fontFamily];
+              document.documentElement.style.setProperty('--app-font-family', f);
+              document.documentElement.style.fontFamily = f;
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-transparent text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- 배경 소프트 앰비언트 글로우 -->
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#F97316" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- 안테나 펄스 오렌지 글로우 -->
+    <radialGradient id="antennaGlow" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#FFEDD5"/>
+      <stop offset="25%" stop-color="#FB923C"/>
+      <stop offset="70%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </radialGradient>
+
+    <!-- 무광 네이비 3D 바디 그라디언트 -->
+    <radialGradient id="navyBodyMatte" cx="42%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="45%" stop-color="#1E293B"/>
+      <stop offset="85%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+
+    <!-- 바디 상단 림라이트 (부드러운 하이라이트) -->
+    <linearGradient id="bodyRimLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#64748B" stop-opacity="0.8"/>
+      <stop offset="30%" stop-color="#334155" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- 오렌지 헤드폰/이어 패드 그라디언트 -->
+    <linearGradient id="orangeAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+
+    <!-- 디지털 글래스 바이저 그라디언트 -->
+    <linearGradient id="visorGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="40%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#050B14"/>
+    </linearGradient>
+
+    <!-- 바이저 광택 반사 그라디언트 -->
+    <linearGradient id="visorSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35"/>
+      <stop offset="35%" stop-color="#FFFFFF" stop-opacity="0.15"/>
+      <stop offset="70%" stop-color="#38BDF8" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- 에메랄드/민트 LED 눈 발광 -->
+    <filter id="emeraldNeonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 부드러운 드롭 섀도우 -->
+    <filter id="shadow3D" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#020617" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- 바닥 부유 그림자 -->
+  <ellipse cx="256" cy="468" rx="110" ry="18" fill="#020617" opacity="0.45" filter="blur(8px)"/>
+
+  <!-- 메인 캐릭터 컨테이너 -->
+  <g filter="url(#shadow3D)">
+    
+    <!-- 1. 큰 안테나 기둥 & 오렌지 링 액센트 -->
+    <rect x="250" y="80" width="12" height="65" rx="6" fill="#334155"/>
+    <ellipse cx="256" cy="115" rx="14" ry="5" fill="url(#orangeAccent)"/>
+    
+    <!-- 안테나 꼭대기 오렌지 네온 볼 -->
+    <circle cx="256" cy="72" r="28" fill="url(#antennaGlow)"/>
+    <circle cx="256" cy="72" r="32" fill="#F97316" opacity="0.3" filter="blur(6px)"/>
+    <!-- 안테나 볼 하이라이트 -->
+    <circle cx="248" cy="64" r="8" fill="#FFFFFF" opacity="0.65"/>
+
+    <!-- 2. 귀/헤드폰 액센트 (좌/우 오렌지 캡슐) -->
+    <!-- 좌측 귀 -->
+    <rect x="76" y="225" width="28" height="64" rx="14" fill="url(#orangeAccent)"/>
+    <circle cx="90" cy="257" r="8" fill="#1E293B"/>
+    <!-- 우측 귀 -->
+    <rect x="408" y="225" width="28" height="64" rx="14" fill="url(#orangeAccent)"/>
+    <circle cx="422" cy="257" r="8" fill="#1E293B"/>
+
+    <!-- 3. 메인 무광 네이비 둥근 바디 -->
+    <rect x="94" y="125" width="324" height="280" rx="140" fill="url(#navyBodyMatte)"/>
+    <!-- 바디 림라이트 하이라이트 -->
+    <rect x="94" y="125" width="324" height="280" rx="140" fill="url(#bodyRimLight)"/>
+
+    <!-- 바디 하단 오렌지 벨트/액센트 링 -->
+    <path d="M 145 370 Q 256 405 367 370" stroke="url(#orangeAccent)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.9"/>
+
+    <!-- 4. 전면 디지털 바이저 스크린 -->
+    <rect x="134" y="180" width="244" height="150" rx="56" fill="url(#visorGlass)" stroke="#334155" stroke-width="3"/>
+    <!-- 바이저 글래스 광택 반사 -->
+    <rect x="136" y="182" width="240" height="75" rx="54" fill="url(#visorSheen)"/>
+
+    <!-- 5. 에메랄드/오렌지 빛 디지털 바이저 LED 눈 -->
+    <g filter="url(#emeraldNeonGlow)">
+      <!-- 좌측 눈: 윙크 & 호기심 표현 가능한 부드러운 커브드 아치형/알약형 -->
+      <path d="M 190 238 C 190 220, 222 220, 222 238 C 222 262, 190 262, 190 238 Z" fill="#34D399"/>
+      <circle cx="206" cy="235" r="4" fill="#A7F3D0"/>
+      <!-- 우측 눈: 반짝이는 미소 윙크/원형 LED -->
+      <path d="M 290 238 C 290 220, 322 220, 322 238 C 322 262, 290 262, 290 238 Z" fill="#34D399"/>
+      <circle cx="306" cy="235" r="4" fill="#A7F3D0"/>
+      <!-- 볼 양쪽 오렌지 블러쉬 LED 포인트 -->
+      <circle cx="168" cy="278" r="8" fill="#F97316" opacity="0.85"/>
+      <circle cx="344" cy="278" r="8" fill="#F97316" opacity="0.85"/>
+    </g>
+
+    <!-- 6. 둥근 3D 플로팅 핸드 (좌/우) -->
+    <!-- 좌측 손 -->
+    <ellipse cx="72" cy="315" rx="22" ry="26" fill="url(#navyBodyMatte)"/>
+    <ellipse cx="72" cy="315" rx="22" ry="26" fill="url(#bodyRimLight)"/>
+    <circle cx="72" cy="305" r="6" fill="#F97316"/>
+    <!-- 우측 손 (인사하듯 살짝 위로) -->
+    <ellipse cx="440" cy="295" rx="22" ry="26" fill="url(#navyBodyMatte)"/>
+    <ellipse cx="440" cy="295" rx="22" ry="26" fill="url(#bodyRimLight)"/>
+    <circle cx="440" cy="285" r="6" fill="#F97316"/>
+  </g>
+</svg>

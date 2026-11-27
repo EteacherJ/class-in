@@ -1,0 +1,22 @@
+# 의존성 · 빌드 결과
+node_modules/
+dist/
+release/
+*.log
+
+# 서명 키 · 인증서 (절대 올리지 않기)
+_서명키_공유금지/
+*.p12
+*.pfx
+*.cer
+*.pem
+*.key
+.env
+.env.*
+
+# 백업 · 임시 파일
+_backup*/
+붙여넣음*.png
+*.bak
+.DS_Store
+Thumbs.db
